@@ -1,11 +1,7 @@
 def cislo_text(cislo):
-    #0-9
     jednotky = ["nula", "jedna", "dva", "tři", "čtyři", "pět", "šest", "sedm", "osm", "devět"]
-    #10-19
     desitky = ["deset", "jedenáct", "dvanáct", "třináct", "čtrnáct", "patnáct", "šestnáct", "sedmnáct", "osmnáct", "devatenáct"]
-    #20-99
     dvojciferny = ["","", "dvacet", "třicet", "čtyřicet", "padesát", "šedesát", "sedmdesát", "osmdesát", "devadesát"]
-    #100
     stovka = "sto"
 
     if 0 <= cislo < 10:
