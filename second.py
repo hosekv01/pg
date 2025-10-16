@@ -14,7 +14,7 @@ def cislo_text(cislo):
         if jednotka == 0:
             return dvojciferny[desitka]
         else:
-            return dvojciferny[desitka] + jednotky[jednotka]
+            return dvojciferny[desitka] + " " + jednotky[jednotka]
     else:
         if cislo == 100:
             return stovka
