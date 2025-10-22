@@ -10,7 +10,9 @@ def vrat_prvocisla(maximum):
     return [i for i in range(2, maximum + 1) if je_prvocislo(i)]
 
 if __name__ == "__main__":
-    cislo = int(input("Zadej maximum: "))
-    print(cislo, "není prvočíslo" if not je_prvocislo(cislo) else "je prvočíslo")
-    prvocisla = vrat_prvocisla(cislo)
-    print(prvocisla)
+    n = int(input("Zadej maximum: "))
+    if je_prvocislo(n):
+        print(f"{n} je prvočíslo")
+    else:
+        print(f"{n} není prvočíslo")
+    print(vrat_prvocisla(n))
