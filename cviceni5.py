@@ -31,7 +31,13 @@ if __name__ == "__main__":
 import sys
 
 if __name__ == "__main__":
+    try:
+        name = input("Zadej jméno souboru: ")
+        file = open(name, "r")
+        data = file.readline().strip()
+        print(data)
+        data = file.readline()
+        print(data)
 
-    file = open("data.txt", "r")
-    data = file.read()
-    print(data)
+    except FileNotFoundError as e:
+        print(f'Soubor {name} nebyl nalezen: {e}')
