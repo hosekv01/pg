@@ -22,15 +22,24 @@ def zapis_data_do_csv(file_name, data):
         for row in data:
             writer.writerow(row)
 
+def zapis_data_bez_csv(file_name, data):
+    with open(file_name, mode='w') as file:
+        for row in data:
+            line = ','.join(str(value) for value in row)
+            file.write(line + '\n')
 
 if __name__ == "__main__":
 
     try:
         name = input("Zadej jmeno souboru: ")
+        name2 = name.split('.')[0]
+        cislo = 1
+        cislo = cislo + 1
         file = open(name, "r")
         results = precti_hodnoty_a_incrementuj(file)
         print(results)
-        zapis_data_do_csv("vystup.csv", results)
+        zapis_data_do_csv(f"{name2}{cislo}.csv", results)
+        zapis_data_bez_csv(f"{name2}{cislo}.csv", results)
     except FileNotFoundError:
         print(f'Soubor {name} neexistuje')
     except Exception as e:
