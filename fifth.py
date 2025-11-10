@@ -60,9 +60,7 @@ def print_file_type(file_name):
 
 
 if __name__ == '__main__':
-    print ("Postupný test", read_header("fifth-soubory/kitten.jpeg", 4))
-    print ("Postupný test2", read_header("fifth-soubory/kitten.png", 4))
-    print ("Postupný test3", read_header("fifth-soubory/kitten.gif", 4))
+
     try:
         if len(sys.argv) < 2:
             folder = "fifth-soubory"
