@@ -22,6 +22,11 @@ def cislo_text(cislo):
             return "Číslo je mimo rozsah (0-100)"
     
 if __name__ == "__main__":
+    testy = [0, 1, 15, 25, 100]
+    for cislo in testy:
+        text = cislo_text(cislo)
+        print(f"{cislo} -> {text}")
+    
     cislo = int(input("Zadejte číslo mezi 0 a 100: "))
     text = cislo_text(cislo)
     print("Číslo převedené na text:", text)
