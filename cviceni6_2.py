@@ -1,27 +1,39 @@
 import requests
-import json
-import sys 
+import sqlite3
 
-def fetch_rates(url):
-    response = requests.get("http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt")
+db = sqlite3.connect('sqlite.db')
+
+def download_rates(url):
+    response = requests.get(url, timeout=2)
     if not response.ok:
-        print("Nelze načíst data ze serveru.")
-        sys.exit(1)
+        return None
     
-    splitted_text = response.text.splitlines()
     rates = {}
-    for line in splitted_text[2:]:
-        parts = line.split('|')
-        if len(parts) >= 5:
-            code = parts[3]
-            amount = parts[4]
-            amount = amount.replace(',', '.')
-            amount = round(float(amount), 2)
-            rates[code] = amount
-    return rates
+
+    data = response.text
+    data = data.split('\n')
+    date = data[0].split('#')[0].strip()
     
+    for line in data[2:]:
+        fields = line.split('|')
+        if len(fields) < 5:
+            continue
+        #Přepočet kurzu na jednotku měny
+        amount = int(fields[2]) 
+        rate = float(fields[4].replace(',', '.'))
+        rates[fields[3]] = rate / amount
+
+    return date, rates
 
 
 if __name__ == "__main__":
-    listek = fetch_rates("http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt")
-    print(listek)
+
+    db.execute('CREATE TABLE IF NOT EXISTS rates (date TEXT, currency TEXT, rate REAL)')
+
+    datum, listek = download_rates('http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt')
+    
+    for currency, rate in listek.items():
+        db.execute('INSERT INTO rates VALUES (?, ?, ?)', (datum, currency, rate))
+    
+    db.commit()
+    
